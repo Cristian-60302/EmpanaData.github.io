@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmpanaData – Zonas estratégicas en Bogotá</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="./css/empanadata.css"/>
+</head>
+<body>
+
+  <header>
+    <div class="logo">🫔</div>
+    <div>
+      <div class="brand-name">EmpanaData</div>
+      <div class="brand-sub">Sistema inteligente de zonas estratégicas · Bogotá</div>
+    </div>
+    <div class="hstats">
+      <div class="hstat">
+        <div class="hstat-val">429</div>
+        <div class="hstat-lbl">Instituciones</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val">2021</div>
+        <div class="hstat-lbl">Año datos</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val pulse" style="color:var(--blue)">● LIVE</div>
+        <div class="hstat-lbl">Mapa activo</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+
+    <aside class="sidebar">
+      <div class="sb-section">
+        <div class="sec-title">🌶 Zonas de oportunidad</div>
+        <div class="zone-cards" id="zone-cards"></div>
+      </div>
+      <div class="sb-section">
+        <div class="sec-title">🎓 Top IES por matrícula</div>
+        <div class="ies-list" id="ies-list"></div>
+      </div>
+      <div class="sb-section">
+        <div class="sec-title">🔍 Filtrar por zona</div>
+        <div class="filter-row">
+          <button class="fbtn active" onclick="filterMap('all', this)">Todas</button>
+          <button class="fbtn"        onclick="filterMap('alta', this)">Alta densidad</button>
+          <button class="fbtn"        onclick="filterMap('media', this)">Media</button>
+        </div>
+        <div class="filter-row">
+          <button class="fbtn" onclick="filterMap('norte', this)">Norte</button>
+          <button class="fbtn" onclick="filterMap('centro', this)">Centro</button>
+          <button class="fbtn" onclick="filterMap('sur', this)">Sur</button>
+        </div>
+      </div>
+    </aside>
+
+    <div class="map-wrap">
+      <div class="info-bar">
+        📍 Haz clic en cualquier institución para ver detalles &nbsp;·&nbsp;
+        El tamaño del punto indica la <span>densidad de instituciones</span> en esa zona
+      </div>
+      <div id="map"></div>
+      <div class="legend">
+        <div class="leg-title">Potencial de venta</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#15803D;"></div>Alto (+15 instituciones)</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#B45309;"></div>Medio (6 – 14)</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#B91C1C;"></div>Bajo (1 – 5)</div>
+        <div class="leg-item" style="margin-top:8px;"><div class="leg-dot" style="background:rgba(2,132,199,0.2);border:2px dashed #0284C7;"></div>Zona recomendada</div>
+      </div>
+    </div>
+    
+    <div class="contenedor-boton-estudio">
+      <a href="./html/Estudio.html">
+        <button class="btn-estudio-financiero">Estudio Financiero</button>
+      </a>
+    </div>
+
+
+
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./js/empanadata.js"></script>
+  <script src="./js/empanadata-app.js"></script>
+
+</body>
+</html>

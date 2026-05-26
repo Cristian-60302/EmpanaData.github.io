@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudio Financiero — Generador de Proyectos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/Estudio.css"/>
+</head>
+<body>
+
+<header>
+  <h1>Estudio Financiero</h1>
+  <span>Generador de proyectos</span>
+</header>
+
+<nav class="stepper" id="stepper">
+  <button class="step-btn active" onclick="goStep(0)" id="stab0"><span class="step-num">1</span> Proyecto</button>
+  <button class="step-btn" onclick="goStep(1)" id="stab1"><span class="step-num">2</span> Inversión</button>
+  <button class="step-btn" onclick="goStep(2)" id="stab2"><span class="step-num">3</span> Costos</button>
+  <button class="step-btn" onclick="goStep(3)" id="stab3"><span class="step-num">4</span> Ingresos</button>
+  <button class="step-btn" onclick="goStep(4)" id="stab4"><span class="step-num">5</span> Financiamiento</button>
+  <button class="step-btn" onclick="goStep(5)" id="stab5"><span class="step-num">6</span> Resultados</button>
+</nav>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-label">Progreso</div>
+    <div class="sidebar-item active" onclick="goStep(0)" id="s0">1. Descripción del proyecto</div>
+    <div class="sidebar-item" onclick="goStep(1)" id="s1">2. Inversión inicial</div>
+    <div class="sidebar-item" onclick="goStep(2)" id="s2">3. Costos y gastos</div>
+    <div class="sidebar-item" onclick="goStep(3)" id="s3">4. Ingresos proyectados</div>
+    <div class="sidebar-item" onclick="goStep(4)" id="s4">5. Financiamiento</div>
+    <div class="sidebar-item" onclick="goStep(5)" id="s5">6. Resultados financieros</div>
+    <div class="sidebar-label">Opciones</div>
+    <div class="sidebar-item" onclick="resetForm()" style="color:rgba(192,57,43,0.6)">↺ Nuevo estudio</div>
+    <div>
+      <a href="../EmpanaData.html">
+          <button class="btn btn-primary">Volver a EmpanaData</button>
+      </a>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <!-- ═══ PASO 0: PROYECTO ═══ -->
+    <div class="section active" id="sec0">
+      <h2 class="section-title">Descripción del proyecto</h2>
+      <p class="section-sub">Cuéntanos sobre tu negocio. Esta información se usará en el encabezado del estudio financiero.</p>
+      <div class="card-group">
+        <div class="card-group-title">Información general</div>
+        <div class="form-grid single">
+          <div class="field">
+            <label>Nombre del proyecto</label>
+            <input type="text" id="p_nombre" placeholder="Ej: Coffee Campus — Cafetería Universitaria" value="Mi Proyecto">
+          </div>
+        </div>
+        <div class="form-grid" style="margin-top:20px">
+          <div class="field">
+            <label>Objetivo del proyecto</label>
+            <input type="text" id="p_objetivo" placeholder="Ej: Implementar una cafetería rentable y sostenible">
+          </div>
+          <div class="field">
+            <label>Productos o servicios</label>
+            <input type="text" id="p_productos" placeholder="Ej: Café, bebidas frías, snacks">
+          </div>
+          <div class="field">
+            <label>Clientes objetivo</label>
+            <input type="text" id="p_clientes" placeholder="Ej: Estudiantes, docentes, administrativos">
+          </div>
+          <div class="field">
+            <label>Duración del horizonte (años)</label>
+            <select id="p_anios">
+              <option value="3">3 años</option>
+              <option value="5" selected>5 años</option>
+              <option value="7">7 años</option>
+              <option value="10">10 años</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Tasa de crecimiento anual (%)</label>
+            <input type="number" id="p_crecimiento" value="10" min="0" max="100" step="0.5">
+            <span class="field-hint">Crecimiento anual esperado de ingresos</span>
+          </div>
+          <div class="field">
+            <label>Tasa de descuento (%)</label>
+            <input type="number" id="p_tasa_desc" value="12" min="1" max="50" step="0.5">
+            <span class="field-hint">Tasa mínima de retorno esperada (WACC)</span>
+          </div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="goStep(1)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- ═══ PASO 1: INVERSIÓN ═══ -->
+    <div class="section" id="sec1">
+      <h2 class="section-title">Inversión inicial</h2>
+      <p class="section-sub">Ingresa todos los recursos necesarios para poner en marcha el proyecto.</p>
+
+      <div class="card-group">
+        <div class="card-group-title">Activos fijos</div>
+        <div id="activos_fijos_list"></div>
+        <button class="btn btn-secondary" style="margin-top:12px;font-size:12px" onclick="addRow('activos_fijos','activos_fijos_list')">+ Agregar activo</button>
+      </div>
+
+      <div class="card-group">
+        <div class="card-group-title">Activos diferidos (intangibles)</div>
+        <div id="activos_dif_list"></div>
+        <button class="btn btn-secondary" style="margin-top:12px;font-size:12px" onclick="addRow('activos_dif','activos_dif_list')">+ Agregar ítem</button>
+      </div>
+
+      <div class="card-group">
+        <div class="card-group-title">Capital de trabajo</div>
+        <div id="capital_trabajo_list"></div>
+        <button class="btn btn-secondary" style="margin-top:12px;font-size:12px" onclick="addRow('capital_trabajo','capital_trabajo_list')">+ Agregar ítem</button>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goStep(0)">← Atrás</button>
+        <button class="btn btn-primary" onclick="goStep(2)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- ═══ PASO 2: COSTOS ═══ -->
+    <div class="section" id="sec2">
+      <h2 class="section-title">Costos y gastos mensuales</h2>
+      <p class="section-sub">Registra los costos operativos del negocio. Se proyectarán con un incremento anual del 5%.</p>
+
+      <div class="card-group">
+        <div class="card-group-title">Costos variables (mensuales)</div>
+        <div id="cv_list"></div>
+        <button class="btn btn-secondary" style="margin-top:12px;font-size:12px" onclick="addRow('cv','cv_list')">+ Agregar costo variable</button>
+      </div>
+
+      <div class="card-group">
+        <div class="card-group-title">Costos fijos (mensuales)</div>
+        <div id="cf_list"></div>
+        <button class="btn btn-secondary" style="margin-top:12px;font-size:12px" onclick="addRow('cf','cf_list')">+ Agregar costo fijo</button>
+      </div>
+
+      <div class="card-group">
+        <div class="card-group-title">Gastos administrativos (mensuales)</div>
+        <div id="ga_list"></div>
+        <button class="btn btn-secondary" style="margin-top:12px;font-size:12px" onclick="addRow('ga','ga_list')">+ Agregar gasto</button>
+      </div>
+
+      <div class="card-group">
+        <div class="card-group-title">Depreciación</div>
+        <div class="form-grid three">
+          <div class="field">
+            <label>Valor activos depreciables ($)</label>
+            <input type="number" id="dep_valor" value="35000000" min="0">
+          </div>
+          <div class="field">
+            <label>Vida útil (años)</label>
+            <input type="number" id="dep_vida" value="5" min="1" max="20">
+          </div>
+          <div class="field">
+            <label>Depreciación anual ($)</label>
+            <input type="number" id="dep_anual" value="7000000" readonly style="background:var(--paper-dark);cursor:not-allowed">
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goStep(1)">← Atrás</button>
+        <button class="btn btn-primary" onclick="goStep(3)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- ═══ PASO 3: INGRESOS ═══ -->
+    <div class="section" id="sec3">
+      <h2 class="section-title">Ingresos proyectados</h2>
+      <p class="section-sub">Define cómo generará ingresos tu negocio. El modelo calculará la proyección a múltiples años.</p>
+
+      <div class="card-group">
+        <div class="card-group-title">Modelo de ventas</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Ventas diarias promedio (unidades)</label>
+            <input type="number" id="ing_ventas_dia" value="800" min="1">
+          </div>
+          <div class="field">
+            <label>Precio promedio por unidad ($)</label>
+            <input type="number" id="ing_precio" value="3500" min="1">
+          </div>
+          <div class="field">
+            <label>Días de operación al mes</label>
+            <input type="number" id="ing_dias_mes" value="30" min="1" max="31">
+          </div>
+          <div class="field">
+            <label>Porcentaje de cartera (crédito, %)</label>
+            <input type="number" id="ing_cartera_pct" value="20" min="0" max="100">
+            <span class="field-hint">% de ventas a crédito (cobro siguiente mes)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-group">
+        <div class="card-group-title">Precio unitario vs. costo variable unitario</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Precio unitario ($)</label>
+            <input type="number" id="pe_precio" value="3500">
+          </div>
+          <div class="field">
+            <label>Costo variable unitario ($)</label>
+            <input type="number" id="pe_cvu" value="2500">
+            <span class="field-hint">Usado para calcular el Punto de Equilibrio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goStep(2)">← Atrás</button>
+        <button class="btn btn-primary" onclick="goStep(4)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- ═══ PASO 4: FINANCIAMIENTO ═══ -->
+    <div class="section" id="sec4">
+      <h2 class="section-title">Financiamiento del proyecto</h2>
+      <p class="section-sub">Indica cómo se financiará la inversión inicial.</p>
+
+      <div class="card-group">
+        <div class="card-group-title">Estructura de capital</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Aporte de capital propio ($)</label>
+            <input type="number" id="fin_propio" value="48170000" min="0">
+          </div>
+          <div class="field">
+            <label>Crédito bancario ($)</label>
+            <input type="number" id="fin_credito" value="42000000" min="0">
+          </div>
+          <div class="field">
+            <label>Tasa de interés anual del crédito (%)</label>
+            <input type="number" id="fin_tasa" value="1" min="0" max="100" step="0.1">
+          </div>
+          <div class="field">
+            <label>Plazo del crédito (años)</label>
+            <input type="number" id="fin_plazo" value="5" min="1" max="20">
+          </div>
+          <div class="field">
+            <label>Tasa de impuesto de renta (%)</label>
+            <input type="number" id="fin_impuesto" value="35" min="0" max="60">
+          </div>
+          <div class="field">
+            <label>Cuentas por cobrar estimadas ($)</label>
+            <input type="number" id="fin_cxc" value="201600000" min="0">
+            <span class="field-hint">Cartera de clientes en Balance</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-info">
+        ℹ️ Con los datos ingresados se calcularán automáticamente: Estado de Resultados, Balance General, Flujo de Caja, VPN, TIR y Punto de Equilibrio.
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-secondary" onclick="goStep(3)">← Atrás</button>
+        <button class="btn btn-primary" onclick="calcular()">Calcular estudio financiero →</button>
+      </div>
+    </div>
+
+    <!-- ═══ PASO 5: RESULTADOS ═══ -->
+    <div class="section" id="sec5">
+      <h2 class="section-title" id="res_titulo">Estudio Financiero</h2>
+      <p class="section-sub" id="res_sub">Resultados del análisis de viabilidad financiera.</p>
+
+      <!-- KPIs -->
+      <div class="results-grid" id="kpi_grid"></div>
+
+      <!-- Estado de Resultados -->
+      <div class="chart-box">
+        <h3>Estado de Resultados — Año 1</h3>
+        <table class="result-table" id="er_table"></table>
+      </div>
+
+      <!-- Ingresos vs Egresos -->
+      <div class="chart-box">
+        <h3>Proyección de ingresos vs. egresos</h3>
+        <div style="position:relative;height:280px">
+          <canvas id="chartFlujoCaja" role="img" aria-label="Gráfico de ingresos vs egresos proyectados"></canvas>
+        </div>
+      </div>
+
+      <!-- Flujo acumulado -->
+      <div class="chart-box">
+        <h3>Flujo de caja acumulado</h3>
+        <div style="position:relative;height:220px">
+          <canvas id="chartAcumulado" role="img" aria-label="Flujo de caja acumulado"></canvas>
+        </div>
+      </div>
+
+      <!-- Composición inversión -->
+      <div class="chart-box">
+        <h3>Composición de la inversión inicial</h3>
+        <div style="display:flex;gap:24px;align-items:center">
+          <div style="position:relative;height:200px;width:200px;flex-shrink:0">
+            <canvas id="chartInversion" role="img" aria-label="Composición inversión inicial"></canvas>
+          </div>
+          <div id="inv_leyenda" style="font-size:12px;flex:1"></div>
+        </div>
+      </div>
+
+      <!-- Indicadores -->
+      <div class="chart-box">
+        <h3>Indicadores financieros</h3>
+        <table class="result-table" id="ind_table"></table>
+      </div>
+
+      <!-- Balance General -->
+      <div class="chart-box">
+        <h3>Balance General — Año 1</h3>
+        <table class="result-table" id="bg_table"></table>
+      </div>
+
+      <!-- Punto de Equilibrio -->
+      <div class="chart-box">
+        <h3>Punto de equilibrio</h3>
+        <table class="result-table" id="pe_table"></table>
+        <div style="position:relative;height:220px;margin-top:20px">
+          <canvas id="chartPE" role="img" aria-label="Gráfico punto de equilibrio"></canvas>
+        </div>
+      </div>
+
+      <!-- Conclusión -->
+      <div class="conclusion" id="conclusion_box"></div>
+
+      <div class="btn-row" style="margin-top:32px">
+        <button class="btn btn-secondary" onclick="goStep(4)">← Editar datos</button>
+        <button class="btn btn-primary" onclick="exportarPDF()">Exportar PDF</button>
+        <button class="btn btn-secondary" onclick="resetForm()">Nuevo estudio</button>
+      </div>
+    </div>
+
+    
+
+
+  </main>
+</div>
+
+<!-- Librerías externas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Lógica de la aplicación -->
+<script src="../js/Estudio.js"></script>
+
+</body>
+</html>
