@@ -378,8 +378,8 @@ function renderChartFlujo(labels, ing, eg) {
     data: {
       labels,
       datasets: [
-        {label:'Ingresos', data:ing.map(v=>Math.round(v/1e6)), backgroundColor:'#1E7F4E', borderRadius:3},
-        {label:'Egresos',  data:eg.map(v=>Math.round(v/1e6)),  backgroundColor:'#C9A84C', borderRadius:3}
+        {label:'Ingresos', data:ing.map(v=>Math.round(v/1e6)), backgroundColor:'#15803D', borderRadius:3},
+        {label:'Egresos',  data:eg.map(v=>Math.round(v/1e6)),  backgroundColor:'#0284C7', borderRadius:3}
       ]
     },
     options: {
@@ -392,7 +392,7 @@ function renderChartFlujo(labels, ing, eg) {
 
 function renderChartAcumulado(labels, acum) {
   destroyChart('acum');
-  const colors = acum.map(v => v >= 0 ? 'rgba(30,127,78,0.7)' : 'rgba(192,57,43,0.7)');
+  const colors = acum.map(v => v >= 0 ? 'rgba(21,128,61,0.72)' : 'rgba(185,28,28,0.72)');
   charts['acum'] = new Chart(document.getElementById('chartAcumulado'), {
     type: 'bar',
     data: {
@@ -411,7 +411,7 @@ function renderChartInversion(af, ad, ct) {
   destroyChart('inv');
   const data = [af, ad, ct];
   const lbls = ['Activos fijos', 'Activos diferidos', 'Capital de trabajo'];
-  const cols = ['#1A1612', '#C9A84C', '#8B6914'];
+  const cols = ['#0284C7', '#15803D', '#7DD3FC'];
   charts['inv'] = new Chart(document.getElementById('chartInversion'), {
     type: 'doughnut',
     data: { labels: lbls, datasets: [{ data, backgroundColor: cols, borderWidth: 0 }] },
@@ -444,8 +444,8 @@ function renderChartPE(precio, cvu, peQ) {
     data: {
       labels: qs.map(q => q.toLocaleString('es-CO')),
       datasets: [
-        {label:'Ingresos totales', data:IT.map(v=>Math.round(v/1e6)),     borderColor:'#1E7F4E', tension:0.1, borderWidth:2, pointRadius:2},
-        {label:'Costos totales',   data:CT_data.map(v=>Math.round(v/1e6)), borderColor:'#C9A84C', tension:0.1, borderWidth:2, pointRadius:2, borderDash:[5,3]}
+        {label:'Ingresos totales', data:IT.map(v=>Math.round(v/1e6)),     borderColor:'#15803D', tension:0.1, borderWidth:2, pointRadius:2},
+        {label:'Costos totales',   data:CT_data.map(v=>Math.round(v/1e6)), borderColor:'#0284C7', tension:0.1, borderWidth:2, pointRadius:2, borderDash:[5,3]}
       ]
     },
     options: {
